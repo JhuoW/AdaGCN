@@ -13,9 +13,6 @@ def get_dataloaders(all_idx: list, labels, batch_size = None):
     dataloaders = [DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True) for dataset in datasets]
     return dataloaders
 
-
-
-
 def train(args, model: GraphSGConvolution, aug_adj, features, loaders, optimizer,early_stopping, logger: Logger):
     ab = SAMMER(args.n_nodes, args.n_classes)
     prop = torch.clone(features).cuda()
@@ -26,7 +23,6 @@ def train(args, model: GraphSGConvolution, aug_adj, features, loaders, optimizer
         logger.add_line()
         logger.log("\t\t%d th Layer" % layer)
         logger.add_line()
-        # minimizing current weighted loss
 
         x = torch.spmm(aug_adj, prop)  # AX
         epoch_stats = {'train': {}, 'stopping': {}}
@@ -47,7 +43,7 @@ def train(args, model: GraphSGConvolution, aug_adj, features, loaders, optimizer
                 w_loss = model.weighted_loss(out, idx, labels, sample_weight)
                 l2_reg = sum((torch.sum(param ** 2) for param in model.reg_params))
                 loss = w_loss + args.l2_reg/ 2 * l2_reg
-                
+                # minimizing current weighted loss
                 loss.backward(retain_graph=True)
                 optimizer.step()
                 running_loss += loss.item()
