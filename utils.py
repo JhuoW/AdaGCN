@@ -9,6 +9,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from typing import List, Tuple, Dict
 import copy
+## Adapt From PPNP
+
 
 class SparseDropout(nn.Module):
     def __init__(self, p:float = 0.5):
@@ -98,8 +100,6 @@ def load_data(dataset_str): # {'pubmed', 'citeseer', 'cora'}
     test_idx_range = np.sort(test_idx_reorder)
 
     if dataset_str == 'citeseer':
-        # Fix citeseer dataset (there are some isolated nodes in the graph)
-        # Find isolated nodes, add them as zero-vecs into the right position
         test_idx_range_full = range(min(test_idx_reorder), max(test_idx_reorder)+1)
         tx_extended = sp.lil_matrix((len(test_idx_range_full), x.shape[1]))
         tx_extended[test_idx_range-min(test_idx_range), :] = tx
