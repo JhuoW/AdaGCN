@@ -6,7 +6,6 @@ import numpy as np
 
 from torch.nn import Module
 
-
 class StopVariable(Enum):
     LOSS = auto()
     ACCURACY = auto()
@@ -20,7 +19,7 @@ class Best(Enum):
 
 stopping_args = dict(
         stop_varnames=[StopVariable.ACCURACY],
-        patience=300, max_epochs=500, remember=Best.RANKED)  
+        patience=300, max_epochs=500, remember=Best.RANKED)
 
 class EarlyStopping:
     def __init__(

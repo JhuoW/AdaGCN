@@ -4,9 +4,8 @@ import math
 import torch.nn.functional as F
 class GraphSGConvolution(nn.Module):
     """
-    A Graph SGC Layer 
+    A Graph SGC Layer with MLP
     """
-
     def __init__(self, in_channel, hidden_channel,  out_channel, bias=True, dropout = 0):
         super(GraphSGConvolution, self).__init__()
         self.in_features = in_channel
