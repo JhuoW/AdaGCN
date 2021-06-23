@@ -2,7 +2,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-class Adaboost:
+class SAMMER:
     def __init__(self, n_nodes, n_classes) -> None:
         self.n_nodes = n_nodes
         self.n_classes = n_classes

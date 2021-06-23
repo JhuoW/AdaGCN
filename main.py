@@ -4,7 +4,7 @@ from earlystopping import EarlyStopping, stopping_args
 from Base import GraphSGConvolution
 from torch.utils.data import TensorDataset, DataLoader
 
-from adaboost import Adaboost
+from SAMMER import SAMMER
 from logger import Logger
 def get_dataloaders(all_idx: list, labels, batch_size = None):
     if batch_size is None:
@@ -17,7 +17,7 @@ def get_dataloaders(all_idx: list, labels, batch_size = None):
 
 
 def train(args, model: GraphSGConvolution, aug_adj, features, loaders, optimizer,early_stopping, logger: Logger):
-    ab = Adaboost(args.n_nodes, args.n_classes)
+    ab = SAMMER(args.n_nodes, args.n_classes)
     prop = torch.clone(features).cuda()
     aug_adj = aug_adj.cuda()
     sample_weight = torch.ones(args.n_nodes).cuda()
