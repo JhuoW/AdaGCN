@@ -27,8 +27,6 @@ class Adaboost:
         y_coding = torch.from_numpy(y_codes.take(self.classes == y[:, np.newaxis])).cuda()  # y: [n_samples, ]  to one hot 
 
 
-        proba = self.y_predict_proba  # alias for readability
-
         estimator_weight = (-1. * ((self.n_classes - 1.) / self.n_classes) * torch.xlogy(y_coding, self.y_predict_proba[idx]).sum(axis=1))
 
 

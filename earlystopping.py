@@ -13,17 +13,14 @@ class StopVariable(Enum):
     NONE = auto()
 
 
-class Best(Enum):  # list(Best) = [<Best.RANKED: 1>, <Best.ALL: 2>]
+class Best(Enum):  
     RANKED = auto()
     ALL = auto()
 
 
-# stopping_args = dict(
-#         stop_varnames=[StopVariable.ACCURACY, StopVariable.LOSS],
-#         patience=300, max_epochs=500, remember=Best.RANKED)
 stopping_args = dict(
         stop_varnames=[StopVariable.ACCURACY],
-        patience=300, max_epochs=500, remember=Best.RANKED)   # 300, 500
+        patience=300, max_epochs=500, remember=Best.RANKED)  
 
 class EarlyStopping:
     def __init__(

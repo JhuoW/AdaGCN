@@ -1,14 +1,9 @@
-from networkx.generators.internet_as_graphs import random_internet_as_graph
-from networkx.utils.heaps import PairingHeap
-from torch.nn import functional as F
-from torch.utils import data
 from utils import *
 from argparse import ArgumentParser
 from earlystopping import EarlyStopping, stopping_args
 from Base import GraphSGConvolution
-from torch.utils.data import TensorDataset, DataLoader, dataloader
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.neural_network import MLPClassifier
+from torch.utils.data import TensorDataset, DataLoader
+
 from adaboost import Adaboost
 from logger import Logger
 def get_dataloaders(all_idx: list, labels, batch_size = None):
@@ -27,7 +22,6 @@ def train(args, model: GraphSGConvolution, aug_adj, features, loaders, optimizer
     aug_adj = aug_adj.cuda()
     sample_weight = torch.ones(args.n_nodes).cuda()
     total = 0
-    # reg_lambda = torch.tensor(args.l2_reg).cuda()
     for layer in range(args.L):
         logger.add_line()
         logger.log("\t\t%d th Layer" % layer)
@@ -47,10 +41,8 @@ def train(args, model: GraphSGConvolution, aug_adj, features, loaders, optimizer
                 idx = idx.cuda()   # train_idx
                 labels = labels.cuda()
                 optimizer.zero_grad()
-                ## prop = AX
-                # minimizing the current weighted loss
+
                 out = model(x) 
-                # error_rate = model.error_rate(out, idx, labels)
                 
                 w_loss = model.weighted_loss(out, idx, labels, sample_weight)
                 l2_reg = sum((torch.sum(param ** 2) for param in model.reg_params))
@@ -107,21 +99,20 @@ def main(args, logger):
     reg_lambda = torch.tensor(args.l2_reg).cuda()
     if not args.public_split:
         """ PPNP split """
-        epoch_stats = {'train': {}, 'stopping': {}}
         train_idx, val_idx, test_idx = gen_splits(args, labels.numpy())
         loaders = get_dataloaders([train_idx, val_idx, test_idx], labels)
-        # for epoch in range(1):
-        #     for phase in epoch_stats.keys():
-        #         if phase == 'train':
-        #             train(args, model, aug_adj,features, train_loader, optimizer, early_stopping)
-        #         else:
-        #             val(model, val_loader)
+
         total = train(args, model, aug_adj,features, loaders, optimizer, early_stopping, logger)
         acc = accuracy(total.cpu(), labels)
         print("test acc: ", acc.item())  
 
     else:
         """ 用public split做做看 """
+
+        
+
+
+        """ 算了，不做了 """
         pass
 
 
