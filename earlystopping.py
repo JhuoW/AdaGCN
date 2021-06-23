@@ -11,7 +11,6 @@ class StopVariable(Enum):
     ACCURACY = auto()
     NONE = auto()
 
-
 class Best(Enum):  
     RANKED = auto()
     ALL = auto()
@@ -19,7 +18,7 @@ class Best(Enum):
 
 stopping_args = dict(
         stop_varnames=[StopVariable.ACCURACY],
-        patience=300, max_epochs=500, remember=Best.RANKED)
+        patience=300, max_epochs=500, remember=Best.RANKED)  # for cora 
 
 class EarlyStopping:
     def __init__(
