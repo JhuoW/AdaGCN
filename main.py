@@ -134,7 +134,7 @@ if __name__ == "__main__":
     parser.add_argument('--n_val', type = int, default=500)
     parser.set_defaults(max_epochs=500)
     args = parser.parse_args()
-    logger = Logger(mode = [print])  # 如果及时 append = ['clock']
+    logger = Logger(mode = [print])  
     logger.add_line = lambda : logger.log("-" * 50)
     logger.log(" ".join(sys.argv))
     logger.add_line()

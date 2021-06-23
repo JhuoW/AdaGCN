@@ -1,4 +1,3 @@
-from networkx import classes
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -35,41 +34,6 @@ class Adaboost:
         sample_weight[idx] *= torch.exp(estimator_weight * ((sample_weight[idx] > 0) | (estimator_weight < 0)))
 
         return sample_weight
-
-    def predict_proba(self, X):
-
-        decision = self.decision_function(X)
-        return self._compute_proba_from_decision(decision, self.n_classes)
-
-    @staticmethod
-    def _compute_proba_from_decision(decision, n_classes):
-
-        if n_classes == 2:
-            decision = np.vstack([-decision, decision]).T / 2
-        else:
-            decision /= (n_classes - 1)
-        return F.softmax(decision, copy=False)
-
-
-
-    def decision_function(self, X):
-
-        classes = self.classes_[:, np.newaxis]
-
-        if self.algorithm == 'SAMME.R':
-            # The weights are all 1. for SAMME.R
-            pred = sum(self._samme_proba(estimator, self.n_classes, X)
-                       for estimator in self.estimators_)
-        else:  # self.algorithm == "SAMME"
-            pred = sum((estimator.predict(X) == classes).T * w
-                       for estimator, w in zip(self.estimators_,
-                                               self.estimator_weights_))
-
-        pred /= self.estimator_weights_.sum()
-        if self.n_classes == 2:
-            pred[:, 0] *= -1
-            return pred.sum(axis=1)
-        return pred
 
 
     def _samme_proba(self, n_classes):
