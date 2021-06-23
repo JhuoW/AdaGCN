@@ -3,23 +3,19 @@ import time
 starttime = time.time()
 
 def my_clock():
-	'''basically time.clock()
-	'''
+
 	return time.time() - starttime
 def len_ignore_n(s):
-	'''len(s) ignoring \\n
-	'''
+
 	s = str(s).strip()
 	s = s.replace("\n" , "")
 
 	l = (len(bytes(s , encoding = "utf-8")) - len(s)) // 2 + len(s) 
 	l += 7 * s.count("\t")											
-
 	return l
 
 def last_len(s):
-	'''length of last line
-	'''
+
 	s = str(s).strip()
 	return len_ignore_n(s.split("\n")[-1])
 
@@ -61,10 +57,10 @@ class Logger:
 		self.log(char * num)
 
 	def pre_process(self , content):
-		insert_space = self.line_length - last_len(content) #complement to line_length 
+		insert_space = self.line_length - last_len(content)
 		content += " " * insert_space
 
-		for x in self.append: #add something to the end
+		for x in self.append:
 
 			y = ""
 			if x == "clock":
