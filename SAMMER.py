@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+
 class SAMMER:
     def __init__(self, n_nodes, n_classes) -> None:
         self.n_nodes = n_nodes
@@ -18,12 +19,11 @@ class SAMMER:
 
         y_predict = torch.argmax(self.y_predict_proba, dim = -1)[idx]
 
-        # Instances incorrectly classified
         incorrect = y_predict != y
         self.classes = np.arange(self.n_classes)
         y_codes = np.array([-1. / (self.n_classes - 1), 1.])
         y = y.cpu().detach().numpy()
-        y_coding = torch.from_numpy(y_codes.take(self.classes == y[:, np.newaxis])).cuda()  # y: [n_samples, ]  to one hot 
+        y_coding = torch.from_numpy(y_codes.take(self.classes == y[:, np.newaxis])).cuda() 
 
 
         estimator_weight = (-1. * ((self.n_classes - 1.) / self.n_classes) * torch.xlogy(y_coding, self.y_predict_proba[idx]).sum(axis=1))
