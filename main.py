@@ -92,24 +92,24 @@ def main(args, logger):
     model = GraphSGConvolution(nfeat, args.hidden_dim, n_classes, bias = args.bias, dropout= args.dropout).cuda()
     early_stopping = EarlyStopping(model, **stopping_args)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay = args.weight_decay)
-    reg_lambda = torch.tensor(args.l2_reg).cuda()
     if not args.public_split:
         """ PPNP split """
         train_idx, val_idx, test_idx = gen_splits(args, labels.numpy())
-        loaders = get_dataloaders([train_idx, val_idx, test_idx], labels)
-
-        total = train(args, model, aug_adj,features, loaders, optimizer, early_stopping, logger)
-        acc = accuracy(total.cpu(), labels)
-        print("test acc: ", acc.item())  
-
     else:
         """ 用public split做做看 """
+        train_idx = train_mask.nonzero().squeeze()
+        val_idx = val_mask.nonzero().squeeze()
+        test_idx = test_mask.nonzero().squeeze()
+
+    loaders = get_dataloaders([train_idx, val_idx, test_idx], labels)
+
+    total = train(args, model, aug_adj,features, loaders, optimizer, early_stopping, logger)
+    acc = accuracy(total.cpu(), labels)
+    print("test acc: ", acc.item())  
+
+
 
         
-
-
-        """ 算了，不做了 """
-        pass
 
 
 
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     parser.add_argument('--l2_reg', type = float, default=5e-3)
     parser.add_argument('--weight_decay', type = float, default=1e-4)
     parser.add_argument('--L', type = int, default=12)   # in the paper, layers of cora is 12 
-    parser.add_argument('--public_split', type = bool, default= False)
+    parser.add_argument('--public_split', action='store_true', default= False)
     parser.add_argument('--n_train_per_class', type = int, default= 20)
     parser.add_argument('--n_val', type = int, default=500)
     parser.set_defaults(max_epochs=500)

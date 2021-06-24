@@ -12,7 +12,11 @@ scikit_learn==0.24.2
 
 # Run
 ```
+# random split
 python main.py --dataset cora --hidden_dim 5000
+
+# public split
+python main.py --dataset cora --hidden_dim 5000 --public_split
 ```
 
 
