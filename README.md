@@ -22,13 +22,11 @@ python main.py --dataset cora --hidden_dim 5000 --public_split
 
 
 ## :two_hearts: 原作者大佬的源码
-**https://github.com/datake/AdaGCN**  (不过好像还没开源呃:no_mouth:)
+**https://github.com/datake/AdaGCN** 
 
 
-### :star2: Warning
-代码写的超烂 :pensive:。。。。。。。
-
-不过，应该也没什么人看叭~~
+### :star2: 
+可能有一些bug唉 :pensive:。。。。。。。
 
 <p align="center">
   <img width="300" src="img/duolaADream.jpg">
