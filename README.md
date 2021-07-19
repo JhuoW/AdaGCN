@@ -13,10 +13,10 @@ scikit_learn==0.24.2
 # Run
 ```
 # random split
-python main.py --dataset cora --hidden_dim 5000
+python main.py --dataset_str cora --hidden_dim 5000
 
 # public split
-python main.py --dataset cora --hidden_dim 5000 --public_split
+python main.py --dataset_str cora --hidden_dim 5000 --public_split
 ```
 
 
@@ -26,7 +26,7 @@ python main.py --dataset cora --hidden_dim 5000 --public_split
 
 
 ### :star2: 
-可能有一些bug唉 :pensive:。。。。。。。
+可能有一些bug唉 :pensive:
 
 <p align="center">
   <img width="300" src="img/duolaADream.jpg">
