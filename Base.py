@@ -19,9 +19,9 @@ class GraphSGConvolution(nn.Module):
 
     def init(self):
         stdv = 1. / math.sqrt(self.fcs[0].weight.size(1))
-        stdv = 1. / math.sqrt(self.fcs[1].weight.size(1))
+        stdv1 = 1. / math.sqrt(self.fcs[1].weight.size(1))
         self.fcs[0].weight.data.uniform_(-stdv, stdv)
-        self.fcs[1].weight.data.uniform_(-stdv, stdv)
+        self.fcs[1].weight.data.uniform_(-stdv1, stdv1)
 
 
     def forward(self, input):
