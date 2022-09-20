@@ -18,16 +18,3 @@ python main.py --dataset_str cora --hidden_dim 5000
 # public split
 python main.py --dataset_str cora --hidden_dim 5000 --public_split
 ```
-
-
-
-## :two_hearts: 原作者大佬的源码
-**https://github.com/datake/AdaGCN** 
-
-
-### :star2: 
-可能有一些bug唉 :pensive:
-
-<p align="center">
-  <img width="300" src="img/duolaADream.jpg">
-</p>
